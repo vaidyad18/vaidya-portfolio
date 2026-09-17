@@ -66,7 +66,7 @@ export default function DesktopGridSkeleton() {
 					</div>
 				</div>
 			</div>
-			{/* Cell F (Codeforces) */}
+			{/* Cell F (GFG) */}
 			<div className="hidden xl:flex h-full min-h-0 flex-col clip-margin-5">
 				<div className="w-full h-full p-4 flex flex-col bg-background/50 border-2 border-muted/20 animate-pulse">
 					<div className="h-5 w-32 bg-muted/50 rounded mb-4"></div>

@@ -32,7 +32,7 @@ export default function HeroSection() {
 				className="inline-flex items-center gap-2 bg-accent-warning text-black px-3 py-1.5 xl:px-[clamp(0.5rem,1.5cqi,0.75rem)] xl:py-[clamp(0.25rem,1cqi,0.375rem)] text-[10px] xl:text-[clamp(0.5rem,1.2cqi,0.625rem)] font-bold uppercase tracking-widest border-[2px] border-border shadow-sm mb-4 xl:mb-[clamp(0.5rem,2cqi,1rem)]"
 			>
 				<span className="w-1.5 h-1.5 bg-black animate-pulse" />
-				Open to Internships & Full-Time Roles
+				Open to Full-Time Roles
 			</motion.div>
 
 			<motion.div
@@ -43,7 +43,7 @@ export default function HeroSection() {
 				aria-hidden="true"
 				className="font-gothic text-5xl md:text-7xl xl:text-[clamp(3.25rem,9.5cqi,5.25rem)] font-normal tracking-wide text-black leading-[0.9] cursor-default select-none"
 			>
-				{"Medhansh".split("").map((char, index) => (
+				{"Vaidya Dandriyal".split("").map((char, index) => (
 					<span
 						key={index}
 						className="transition-all duration-300 hover:[text-shadow:0_0_15px_rgba(220,38,38,0.55)]"
@@ -77,24 +77,10 @@ export default function HeroSection() {
 				transition={{ delay: 0.4 }}
 				className="flex flex-row flex-nowrap gap-2 xl:gap-3 mt-4 xl:mt-[clamp(0.5rem,2cqi,1rem)] w-fit"
 			>
+
 				<MagneticWrap>
 					<a
-						href="https://x.com/medhansh541"
-						target="_blank"
-						rel="me noopener noreferrer"
-						title="X (Twitter)"
-						aria-label="X (Twitter)"
-						className="group flex items-center justify-center h-[clamp(2.5rem,4cqi,3.5rem)] min-w-[clamp(2.5rem,4cqi,3.5rem)] px-0 hover:px-3 xl:hover:px-4 bg-background text-foreground border-[3px] border-border shadow-sm hover:shadow-[3px_3px_0_0_var(--color-accent-secondary)] hover:-translate-x-[2px] hover:-translate-y-[2px] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all duration-300 select-none cursor-pointer overflow-hidden"
-					>
-						<FaXTwitter size={20} className="shrink-0" aria-hidden="true" />
-						<span className="max-w-0 opacity-0 group-hover:max-w-[100px] group-hover:opacity-100 group-hover:ml-2 whitespace-nowrap overflow-hidden transition-all duration-300 font-bold uppercase tracking-widest text-[10px] xl:text-xs">
-							Twitter
-						</span>
-					</a>
-				</MagneticWrap>
-				<MagneticWrap>
-					<a
-						href="https://www.instagram.com/medhansh341/"
+						href={profile.instagram}
 						target="_blank"
 						rel="me noopener noreferrer"
 						title="Instagram"
@@ -158,7 +144,7 @@ export default function HeroSection() {
 				</MagneticWrap>
 				<MagneticWrap>
 					<a
-						href="https://cal.com/medhansh541"
+						href={profile.cal}
 						target="_blank"
 						rel="me noopener noreferrer"
 						title="Meet"

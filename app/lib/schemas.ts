@@ -1,45 +1,7 @@
 import { z } from "zod";
 
-// Codeforces API Schemas
-export const CodeforcesUserInfoSchema = z.object({
-	status: z.string(),
-	result: z
-		.array(
-			z.object({
-				handle: z.string().optional(),
-				rating: z.number().optional(),
-				maxRating: z.number().optional(),
-				rank: z.string().optional(),
-				maxRank: z.string().optional(),
-				avatar: z.string().optional(),
-			}),
-		)
-		.optional(),
-});
-
-export const CodeforcesStatusSchema = z.object({
-	status: z.string(),
-	result: z
-		.array(
-			z.object({
-				verdict: z.string().optional(),
-				creationTimeSeconds: z.number().optional(),
-				problem: z
-					.object({
-						contestId: z.number().optional(),
-						index: z.string().optional(),
-					})
-					.optional(),
-			}),
-		)
-		.optional(),
-});
-
-export const CodeforcesRatingSchema = z.object({
-	status: z.string(),
-	result: z.array(z.any()).optional(),
-});
-
+// GeeksForGeeks Normalized DTO
+// GFG has no official API; data is scraped from the public profile page
 // LeetCode API Schemas
 export const LeetCodeResponseSchema = z.object({
 	data: z
@@ -157,22 +119,12 @@ export const GithubCommitSchema = z.object({
 
 export const GithubCommitArraySchema = z.array(GithubCommitSchema);
 
-export type CodeforcesUserInfo = NonNullable<
-	z.infer<typeof CodeforcesUserInfoSchema>["result"]
->[number];
-export type CodeforcesStatusEntry = NonNullable<
-	z.infer<typeof CodeforcesStatusSchema>["result"]
->[number];
-
-export type NormalizedCodeforcesDto = {
+export type NormalizedGfgDto = {
 	handle: string;
-	rating: number;
-	maxRating: number;
-	rank: string;
-	maxRank: string;
-	solvedCount: number;
-	contestCount: number;
-	avatar: string;
+	codingScore: number;
+	problemsSolved: number;
+	streak: number;
+	instituteRank: number;
 	calendar: Record<string, number>;
 };
 

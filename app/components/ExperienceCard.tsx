@@ -3,6 +3,7 @@
 import { FiTerminal } from "react-icons/fi";
 import Link from "next/link";
 import { profile } from "@/app/data/profile";
+import { getSkillIcon } from "@/app/lib/skillIcons";
 import CardFooter from "./ui/CardFooter";
 import CardHeader from "./ui/CardHeader";
 import RetroCard from "./ui/RetroCard";
@@ -73,14 +74,18 @@ export default function ExperienceCard({
 
 						{/* Tech Stack */}
 						<div className="flex flex-wrap gap-1 mt-1">
-							{exp.tech.map((tech) => (
-								<span
-									key={tech}
-									className="text-[length:var(--text-desktop-2xs)] font-mono uppercase font-bold border-[length:var(--border-fluid)] border-black px-1.5 py-0.5 bg-muted"
-								>
-									{tech}
-								</span>
-							))}
+							{exp.tech.map((tech) => {
+								const icon = getSkillIcon(tech);
+								return (
+									<span
+										key={tech}
+										className="inline-flex items-center gap-1 text-[length:var(--text-desktop-2xs)] font-mono uppercase font-bold border-[length:var(--border-fluid)] border-black px-1.5 py-0.5 bg-muted"
+									>
+										{icon && <span className="text-foreground/80">{icon}</span>}
+										{tech}
+									</span>
+								);
+							})}
 						</div>
 
 						{/* Actions (Certificates) */}

@@ -153,7 +153,7 @@ export default function ProjectsDrawer({
 										className="w-full aspect-video relative overflow-hidden bg-border border-[3px] border-border cursor-pointer transition-all duration-200 group"
 									>
 										<SharedVideoPreview
-											projectFileName={proj.title.toLowerCase() === "jansamadhan" ? "jansamadhan" : "nyayaai"}
+											projectFileName={proj.title.toLowerCase().replace(/\s+/g, "")}
 											className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
 										/>
 

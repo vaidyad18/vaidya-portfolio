@@ -4,12 +4,6 @@
 			"source": "/resume",
 			"destination": "/resume.pdf",
 			"permanent": true
-		},
-		{
-			"source": "/(.*)",
-			"has": [{ "type": "host", "value": "www.medhanshk.me" }],
-			"destination": "https://medhanshk.me/$1",
-			"permanent": true
 		}
 	],
 	"headers": [

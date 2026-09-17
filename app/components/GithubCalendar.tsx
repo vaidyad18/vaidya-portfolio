@@ -7,22 +7,23 @@ import GithubCalendarUI from "./GithubCalendarUI";
 interface GithubCalendarProps {
 	githubData: GithubData;
 	leetcodeData: Record<string, number>;
-	codeforcesData: Record<string, number>;
+	gfgData: Record<string, number>;
 }
 
 export default function GithubCalendar({
 	githubData,
 	leetcodeData,
-	codeforcesData,
+	gfgData,
 }: GithubCalendarProps) {
 	return (
 		<GithubCalendarUI
 			githubData={githubData}
 			leetcodeData={leetcodeData}
-			codeforcesData={codeforcesData}
+			gfgData={gfgData}
 		/>
 	);
 }
+
 
 export function GithubCalendarSkeleton() {
 	return (

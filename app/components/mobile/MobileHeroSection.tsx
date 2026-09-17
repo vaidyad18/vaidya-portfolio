@@ -7,7 +7,7 @@ export default function MobileHeroSection() {
 			{/* Open To Banner */}
 			<div className="reveal inline-flex items-center gap-2 bg-accent-warning text-black px-3 py-1.5 text-caption font-bold uppercase tracking-widest border-[2px] border-border shadow-[2px_2px_0_0_#000] mb-fluid-sm">
 				<span className="w-1.5 h-1.5 bg-black animate-pulse" />
-				Open to Internships & Full-Time Roles
+				Open to Full-Time Roles
 			</div>
 
 			{/* Huge Name with Character Map */}
@@ -18,7 +18,7 @@ export default function MobileHeroSection() {
 			>
 				<span className="sr-only">{profile.name}</span>
 				<span aria-hidden="true">
-					{"Medhansh".split("").map((char, index) => (
+					{"Vaidya Dandriyal".split("").map((char, index) => (
 						<span key={index} className="transition-all duration-300 active:[text-shadow:0_0_15px_rgba(220,38,38,0.55)]">
 							{char}
 						</span>

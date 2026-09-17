@@ -4,6 +4,7 @@ import { FiGitCommit, FiGithub } from "react-icons/fi";
 import CardFooter from "./ui/CardFooter";
 import CardHeader from "./ui/CardHeader";
 import RetroCard from "./ui/RetroCard";
+import { profile } from "@/app/data/profile";
 
 interface Commit {
 	id: string;
@@ -31,6 +32,7 @@ export default function CommitFeed({
 	delay = 0.7,
 	style,
 }: CommitFeedProps) {
+	const githubUsername = profile.github.split("/").filter(Boolean).pop() || "vaidyad18";
 
 	if (commits.length === 0)
 		return (
@@ -48,12 +50,12 @@ export default function CommitFeed({
 						accentColor="var(--color-accent)"
 						title="LIVE ACTIVITY"
 						badge={<FiGithub size={11} />}
-						badgeHref="https://github.com/Medhansh-741"
-						badgeAriaLabel="View Medhansh Kapoor's GitHub Profile"
+						badgeHref={profile.github}
+						badgeAriaLabel={`View ${profile.name}'s GitHub Profile`}
 						pulse
 					/>
 				}
-				footer={<CardFooter left="@Medhansh-741" right="LIVE_FEED" />}
+				footer={<CardFooter left={`@${githubUsername}`} right="LIVE_FEED" />}
 			>
 				<p className="mt-3 min-h-[180px] flex items-center justify-center text-desktop-xs font-semibold text-muted-foreground">
 					No recent commits
@@ -78,12 +80,12 @@ export default function CommitFeed({
 					accentColor="var(--color-accent)"
 					title="LIVE ACTIVITY"
 					badge={<FiGithub size={11} aria-hidden="true" />}
-					badgeHref="https://github.com/Medhansh-741"
-					badgeAriaLabel="View Medhansh Kapoor's GitHub Profile"
+					badgeHref={profile.github}
+					badgeAriaLabel={`View ${profile.name}'s GitHub Profile`}
 					pulse
 				/>
 			}
-			footer={<CardFooter left="@Medhansh-741" right="LIVE_FEED" />}
+			footer={<CardFooter left={`@${githubUsername}`} right="LIVE_FEED" />}
 		>
 			{/* Timeline Viewport Container */}
 			<div

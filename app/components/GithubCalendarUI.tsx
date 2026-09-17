@@ -16,16 +16,16 @@ interface ApiResponse {
 interface GithubCalendarUIProps {
 	githubData: ApiResponse;
 	leetcodeData: Record<string, number>;
-	codeforcesData: Record<string, number>;
+	gfgData: Record<string, number>;
 }
 
 export default function GithubCalendarUI({
 	githubData,
 	leetcodeData,
-	codeforcesData,
+	gfgData,
 }: GithubCalendarUIProps) {
 	const [platform, setPlatform] = useState<
-		"github" | "leetcode" | "codeforces"
+		"github" | "leetcode" | "gfg"
 	>("github");
 	const years = githubData?.total
 		? Object.keys(githubData.total).sort((a, b) => b.localeCompare(a))
@@ -58,7 +58,7 @@ export default function GithubCalendarUI({
 					count,
 				};
 			} else {
-				const count = codeforcesData[c.date] || 0;
+				const count = gfgData[c.date] || 0;
 				return {
 					date: c.date,
 					level: getLevelForCount(count),
@@ -107,6 +107,7 @@ export default function GithubCalendarUI({
 	const weeks = groupContributionsIntoWeeks(yearContributions);
 
 	const monthLabels: { label: string; colIndex: number }[] = [];
+	const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 	let prevMonth = -1;
 
 	weeks.forEach((week, colIdx) => {
@@ -115,7 +116,7 @@ export default function GithubCalendarUI({
 			const date = new Date(firstNonNullDay.date);
 			const month = date.getMonth();
 			if (month !== prevMonth) {
-				const label = date.toLocaleString("default", { month: "short" });
+				const label = MONTH_NAMES[month] || "Jan";
 				if (
 					monthLabels.length === 0 ||
 					colIdx - monthLabels[monthLabels.length - 1].colIndex > 2
@@ -159,17 +160,18 @@ export default function GithubCalendarUI({
 					return "#ebedf0";
 			}
 		} else {
+			// GFG green palette
 			switch (level) {
 				case 0:
 					return "#ebedf0";
 				case 1:
-					return "#d2e9ff";
+					return "#b7e4c7";
 				case 2:
-					return "#63b3ed";
+					return "#52b788";
 				case 3:
-					return "#3182ce";
+					return "#2d6a4f";
 				case 4:
-					return "#2b6cb0";
+					return "#1b4332";
 				default:
 					return "#ebedf0";
 			}
@@ -179,14 +181,14 @@ export default function GithubCalendarUI({
 	const getMetricLabel = () => {
 		if (platform === "github") return "contributions";
 		if (platform === "leetcode") return "problems solved";
-		return "submissions";
+		return "problems solved (GFG)";
 	};
 
 	const getShadowHoverClass = () => {
 		if (platform === "github")
 			return "hover:shadow-[3px_3px_0_0_var(--color-accent-secondary)]";
 		if (platform === "leetcode") return "hover:shadow-[3px_3px_0_0_#FFA116]";
-		return "hover:shadow-[3px_3px_0_0_#3182CE]";
+		return "hover:shadow-[3px_3px_0_0_#2f8d46]";
 	};
 
 	const formatDate = (dateStr: string) => {
@@ -236,13 +238,13 @@ export default function GithubCalendarUI({
 					</button>
 					<span className="text-border/40 select-none">|</span>
 					<button
-						onClick={() => setPlatform("codeforces")}
-						className={`px-1.5 py-0.5 rounded-[1px] cursor-pointer transition-colors uppercase font-extrabold ${platform === "codeforces"
-								? "bg-[#3182CE] text-white"
+						onClick={() => setPlatform("gfg")}
+						className={`px-1.5 py-0.5 rounded-[1px] cursor-pointer transition-colors uppercase font-extrabold ${platform === "gfg"
+								? "bg-[#2f8d46] text-white"
 								: "text-foreground/80 hover:text-foreground"
 							}`}
 					>
-						CF
+						GFG
 					</button>
 				</div>
 			</div>

@@ -5,7 +5,7 @@ export const revalidate = 3600; // Cache on server for 1 hour
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
-	const username = searchParams.get("username") || undefined;
+	const username = searchParams.get("username") || "vaidyad18";
 
 	try {
 		const payload = await getGithubData(username);

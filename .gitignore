@@ -44,7 +44,6 @@ next-env.d.ts
 .playwright-mcp/
 ref-screenshot.png
 clock-analysis.png
-medhanshk-me-screenshot.png
 trace.json
 
 # graphify tool output

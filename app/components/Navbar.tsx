@@ -6,6 +6,7 @@ import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import HeaderClock from "./HeaderClock";
 import MagneticWrap from "./MagneticWrap";
+import { profile } from "@/app/data/profile";
 
 const links = [
 	{ href: "/projects", label: "Projects" },
@@ -18,6 +19,10 @@ export default function Navbar() {
 	const [open, setOpen] = useState(false);
 	const pathname = usePathname();
 
+	const nameParts = profile.name.toLowerCase().split(" ");
+	const firstName = nameParts[0] || "";
+	const lastName = nameParts.slice(1).join(".") || "";
+
 	return (
 		<nav className="hidden xl:block sticky top-0 z-50 w-full bg-background border-b-[3px] border-border px-6 md:px-12 py-4">
 			<div className="w-full flex justify-between items-center">
@@ -27,7 +32,7 @@ export default function Navbar() {
 						href="/"
 						className="font-serif text-2xl font-bold tracking-tight text-foreground"
 					>
-						medhansh<span className="text-accent">.kapoor</span>
+						{firstName}<span className="text-accent">{lastName ? `.${lastName}` : ""}</span>
 					</Link>
 				</div>
 

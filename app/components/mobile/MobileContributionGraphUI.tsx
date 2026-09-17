@@ -16,7 +16,7 @@ interface ApiResponse {
 interface MobileContributionGraphUIProps {
 	githubData: ApiResponse;
 	leetcodeData: Record<string, number>;
-	codeforcesData: Record<string, number>;
+	gfgData: Record<string, number>;
 }
 
 // Group into weeks helper
@@ -55,9 +55,9 @@ const groupContributionsIntoWeeks = (days: ContributionDay[]) => {
 export default function MobileContributionGraphUI({
 	githubData,
 	leetcodeData,
-	codeforcesData,
+	gfgData,
 }: MobileContributionGraphUIProps) {
-	const [platform, setPlatform] = useState<"github" | "leetcode" | "codeforces">("github");
+	const [platform, setPlatform] = useState<"github" | "leetcode" | "gfg">("github");
 	const years = useMemo(() => {
 		return githubData?.total
 			? Object.keys(githubData.total).sort((a, b) => b.localeCompare(a))
@@ -89,7 +89,7 @@ export default function MobileContributionGraphUI({
 						count,
 					};
 				} else {
-					const count = codeforcesData[c.date] || 0;
+					const count = gfgData[c.date] || 0;
 					return {
 						date: c.date,
 						level: getLevelForCount(count),
@@ -97,7 +97,7 @@ export default function MobileContributionGraphUI({
 					};
 				}
 			});
-	}, [rawContributions, selectedYear, platform, leetcodeData, codeforcesData]);
+	}, [rawContributions, selectedYear, platform, leetcodeData, gfgData]);
 
 	const platformTotal = useMemo(
 		() => yearContributions.reduce((acc, curr) => acc + curr.count, 0),
@@ -112,6 +112,7 @@ export default function MobileContributionGraphUI({
 	// Month labels
 	const monthLabels = useMemo(() => {
 		const labels: { label: string; colIndex: number }[] = [];
+		const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 		let prevMonth = -1;
 
 		weeks.forEach((week, colIdx) => {
@@ -120,7 +121,7 @@ export default function MobileContributionGraphUI({
 				const date = new Date(firstNonNullDay.date);
 				const month = date.getMonth();
 				if (month !== prevMonth) {
-					const label = date.toLocaleString("default", { month: "short" });
+					const label = MONTH_NAMES[month] || "Jan";
 					if (
 						labels.length === 0 ||
 						colIdx - labels[labels.length - 1].colIndex > 2
@@ -156,12 +157,13 @@ export default function MobileContributionGraphUI({
 				default: return "#ebedf0";
 			}
 		} else {
+			// GFG green palette
 			switch (level) {
 				case 0: return "#ebedf0";
-				case 1: return "#d2e9ff";
-				case 2: return "#63b3ed";
-				case 3: return "#3182ce";
-				case 4: return "#2b6cb0";
+				case 1: return "#b7e4c7";
+				case 2: return "#52b788";
+				case 3: return "#2d6a4f";
+				case 4: return "#1b4332";
 				default: return "#ebedf0";
 			}
 		}
@@ -170,13 +172,13 @@ export default function MobileContributionGraphUI({
 	const getMetricLabel = () => {
 		if (platform === "github") return "contributions";
 		if (platform === "leetcode") return "problems solved";
-		return "submissions";
+		return "problems solved (GFG)";
 	};
 
 	const getShadowHoverClass = () => {
 		if (platform === "github") return "hover:shadow-[3px_3px_0_0_var(--color-accent-secondary)]";
 		if (platform === "leetcode") return "hover:shadow-[3px_3px_0_0_#FFA116]";
-		return "hover:shadow-[3px_3px_0_0_#3182CE]";
+		return "hover:shadow-[3px_3px_0_0_#2f8d46]";
 	};
 
 	return (
@@ -213,14 +215,14 @@ export default function MobileContributionGraphUI({
 						</button>
 						<span className="text-border/40 select-none">|</span>
 						<button
-							onClick={() => setPlatform("codeforces")}
+							onClick={() => setPlatform("gfg")}
 							className={`h-full px-2 rounded-[1px] transition-colors uppercase flex items-center justify-center font-extrabold ${
-								platform === "codeforces"
-									? "bg-[#3182CE] text-white"
+								platform === "gfg"
+									? "bg-[#2f8d46] text-white"
 									: "text-foreground/80"
 							}`}
 						>
-							CF
+							GFG
 						</button>
 					</div>
 				</div>

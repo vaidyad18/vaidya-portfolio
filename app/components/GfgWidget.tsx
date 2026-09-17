@@ -1,50 +1,35 @@
 "use client";
-import { FiTrendingUp } from "react-icons/fi";
-import type { NormalizedCodeforcesDto } from "@/app/lib/schemas";
+import { FiCode } from "react-icons/fi";
+import type { NormalizedGfgDto } from "@/app/lib/schemas";
 
 import CardFooter from "./ui/CardFooter";
 import CardHeader from "./ui/CardHeader";
 import RetroCard from "./ui/RetroCard";
 
-interface CodeforcesWidgetProps {
-	cfData?: NormalizedCodeforcesDto;
+// GFG brand green
+const GFG_COLOR = "#2f8d46";
+
+interface GfgWidgetProps {
+	gfgData?: NormalizedGfgDto;
 	className?: string;
 	delay?: number;
 	style?: React.CSSProperties;
 }
 
-const formatRank = (r: string) => {
-	if (r === "unrated") return "UNRATED";
-	return r.toUpperCase();
-};
-
-const getRankColorClass = (r: string) => {
-	const norm = r.toLowerCase();
-	if (norm === "unrated") return "text-muted-foreground";
-	if (norm === "newbie") return "text-gray-600";
-	if (norm === "pupil") return "text-emerald-700";
-	if (norm === "specialist") return "text-[#02847a]";
-	if (norm === "expert") return "text-blue-700";
-	if (norm === "candidate master") return "text-violet-700";
-	return "text-rose-700";
-};
-
-export default function CodeforcesWidget({
-	cfData,
+export default function GfgWidget({
+	gfgData,
 	className = "",
 	delay = 0.65,
 	style,
-}: CodeforcesWidgetProps) {
-
-	const rating = cfData?.rating ?? 0;
-	const maxRating = cfData?.maxRating ?? 0;
-	const rank = cfData?.rank ?? "unrated";
-	const solvedCount = cfData?.solvedCount ?? 0;
-	const contestCount = cfData?.contestCount ?? 0;
+}: GfgWidgetProps) {
+	const codingScore = gfgData?.codingScore ?? 0;
+	const problemsSolved = gfgData?.problemsSolved ?? 0;
+	const streak = gfgData?.streak ?? 0;
+	const instituteRank = gfgData?.instituteRank ?? 0;
 
 	return (
 		<RetroCard
-			accentColor="#3182CE"
+			accentColor={GFG_COLOR}
 			paddingX="px-3.5 xl:px-desktop-sm"
 			paddingTop="pt-3.5 xl:pt-desktop-sm"
 			paddingBottom="pb-3.5 xl:pb-desktop-sm"
@@ -53,55 +38,58 @@ export default function CodeforcesWidget({
 			style={style}
 			header={
 				<CardHeader
-					icon={<FiTrendingUp size={13} aria-hidden="true" />}
-					accentColor="#3182CE"
-					title="CODEFORCES CP"
-					badge={rating > 0 ? "ACTIVE" : "STANDBY"}
+					icon={<FiCode size={13} aria-hidden="true" />}
+					accentColor={GFG_COLOR}
+					title="GEEKSFORGEEKS"
+					badge={codingScore > 0 ? "ACTIVE" : "STANDBY"}
 					badgeTextColor="text-white"
 				/>
 			}
-			footer={<CardFooter left="HANDLE: Medhansh_217" right="SYS_SYNCED" />}
+			footer={
+				<CardFooter
+					left={`HANDLE: ${gfgData?.handle || "vaidyadantq0y"}`}
+					right="SYS_SYNCED"
+				/>
+			}
 		>
 			{/* Stats Content */}
 			<div className="my-auto flex flex-col gap-2 font-mono">
 				<div className="flex justify-between items-baseline">
 					<span className="text-desktop-xs font-bold text-muted-foreground uppercase">
-						RATING:
+						CODING SCORE:
 					</span>
 					<span
-						className={`text-desktop-sm font-black uppercase ${getRankColorClass(rank)}`}
+						className="text-desktop-sm font-black uppercase"
+						style={{ color: GFG_COLOR }}
 					>
-						{rating > 0 ? (
-							<>
-								{rating}{" "}
-								<span className="text-[9px] font-bold">
-									({formatRank(rank)})
-								</span>
-							</>
-						) : (
-							"UNRATED"
-						)}
+						{codingScore > 0 ? codingScore.toLocaleString() : "—"}
 					</span>
 				</div>
 
 				<div className="flex flex-col gap-1.5 text-[9px] font-bold text-foreground/80 mt-1">
 					<div className="flex justify-between border-b border-border/5 pb-1">
-						<span className="text-muted-foreground uppercase">MAX RATING:</span>
+						<span className="text-muted-foreground uppercase">
+							PROBLEMS SOLVED:
+						</span>
 						<span className="font-black text-foreground">
-							{maxRating > 0 ? maxRating : "—"}
+							{problemsSolved > 0 ? problemsSolved : "—"}
 						</span>
 					</div>
 					<div className="flex justify-between border-b border-border/5 pb-1">
 						<span className="text-muted-foreground uppercase">
-							PROBLEMS SOLVED:
+							CURRENT STREAK:
 						</span>
-						<span className="font-black text-foreground">{solvedCount}</span>
+						<span className="font-black text-foreground">
+							{streak > 0 ? `${streak} days` : "—"}
+						</span>
 					</div>
 					<div className="flex justify-between pb-0.5">
 						<span className="text-muted-foreground uppercase">
-							CONTESTS PLAYED:
+							INSTITUTE RANK:
 						</span>
-						<span className="font-black text-foreground">{contestCount}</span>
+						<span className="font-black text-foreground">
+							{instituteRank > 0 ? `#${instituteRank}` : "—"}
+						</span>
 					</div>
 				</div>
 			</div>
@@ -109,14 +97,14 @@ export default function CodeforcesWidget({
 	);
 }
 
-export function CodeforcesSkeleton({
+export function GfgSkeleton({
 	delay = 0.65,
 	className = "",
 	style,
-}: CodeforcesWidgetProps) {
+}: GfgWidgetProps) {
 	return (
 		<RetroCard
-			accentColor="#3182CE"
+			accentColor={GFG_COLOR}
 			paddingX="px-3.5 xl:px-[clamp(0.5rem,1.5vh,0.875rem)]"
 			paddingTop="pt-3.5 xl:pt-[clamp(0.5rem,1.5vh,0.875rem)]"
 			paddingBottom="pb-3.5 xl:pb-[clamp(0.5rem,1.5vh,0.875rem)]"

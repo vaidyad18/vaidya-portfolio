@@ -8,11 +8,6 @@ interface MobileProjectCardProps {
 	onOpenDemo?: (project: Project) => void;
 }
 
-const MOBILE_VIDEO_MAP: Record<string, string> = {
-	jansamadhan: "jansamadhan",
-	nyayaai: "nyayaai",
-};
-
 export default function MobileProjectCard({ project, onOpenDemo }: MobileProjectCardProps) {
 	return (
 		<div className="w-full h-full flex flex-col justify-between bg-card border border-border/50 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.1),0_1px_2px_rgba(0,0,0,0.06)] p-fluid-md gap-fluid-sm relative">
@@ -43,7 +38,7 @@ export default function MobileProjectCard({ project, onOpenDemo }: MobileProject
 			{/* Video Preview */}
 			<div className="w-full flex-1 min-h-0 bg-muted border-2 border-border overflow-hidden relative mt-fluid-xs">
 				<CardDeckVideo
-					projectFileName={MOBILE_VIDEO_MAP[project.title.toLowerCase()] || project.title.toLowerCase()}
+					projectFileName={project.title.toLowerCase().replace(/\s+/g, "")}
 					className="w-full h-full object-cover"
 				/>
 			</div>

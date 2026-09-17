@@ -562,38 +562,50 @@ export default function CardStackEngine({
 				<div className={`relative invisible pointer-events-none opacity-0 ${ENGINE_SHAPE_CLASSES}`} />
 			)}
 
-			{/* The Shadow Plate */}
-			{activeCards.length > 0 && (
-				<animated.div className="absolute inset-0 origin-center pointer-events-none" style={{ zIndex: -1, scale: bgSpring.scale, opacity: bgSpring.opacity, willChange: "transform" }}>
-					<div className={`rounded-xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] bg-transparent ${ENGINE_SHAPE_CLASSES}`} />
-				</animated.div>
-			)}
+			{/* Background & Inactive Deck Wrapper (Single Spring Subscriber) */}
+			{(activeCards.length > 0 || inactiveCards.length > 0) && (
+				<animated.div
+					className="absolute inset-0 origin-center pointer-events-none"
+					style={{
+						zIndex: 0,
+						scale: bgSpring.scale,
+						opacity: bgSpring.opacity,
+						willChange: "transform",
+					}}
+				>
+					{/* The Shadow Plate */}
+					{activeCards.length > 0 && (
+						<div className="absolute inset-0 origin-center pointer-events-none" style={{ zIndex: -1 }}>
+							<div className={`rounded-xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] bg-transparent ${ENGINE_SHAPE_CLASSES}`} />
+						</div>
+					)}
 
-			{/* The Passive Inactive Deck (The "Peep" Fix) */}
-			{/* Rendered physically behind the active deck so when you pull up, you see the actual new deck waiting beneath! */}
-			{inactiveCards.length > 0 && (
-				<animated.div className="absolute inset-0 origin-center pointer-events-none" style={{ zIndex: 0, scale: bgSpring.scale, opacity: bgSpring.opacity, willChange: "transform" }}>
-					{Array.from({ length: NUM_PHYSICAL_CARDS }, (_, positionInStack) => {
-						const dataIndex = inactiveCursor.offset + (positionInStack * (inactiveCursor.direction === "prev" ? -1 : 1));
-						const card = getCardData(dataIndex, inactiveCards);
-						if (!card) return null;
-						return (
-							<div
-								key={`inactive-${positionInStack}`}
-								className={`absolute top-0 left-0 right-0 mx-auto origin-center ${ENGINE_SHAPE_CLASSES}`}
-								style={{
-									transform: `rotateZ(${STATIC_ROTATIONS[positionInStack]}deg)`,
-									zIndex: NUM_PHYSICAL_CARDS - positionInStack
-								}}
-							>
-								<CardDeckContext.Provider value={{ isTop: false }}>
-									<div className="w-full h-full pointer-events-none overflow-hidden rounded-xl">
-										{card}
+					{/* The Passive Inactive Deck */}
+					{inactiveCards.length > 0 && (
+						<div className="absolute inset-0 origin-center pointer-events-none" style={{ zIndex: 0 }}>
+							{Array.from({ length: NUM_PHYSICAL_CARDS }, (_, positionInStack) => {
+								const dataIndex = inactiveCursor.offset + (positionInStack * (inactiveCursor.direction === "prev" ? -1 : 1));
+								const card = getCardData(dataIndex, inactiveCards);
+								if (!card) return null;
+								return (
+									<div
+										key={`inactive-${positionInStack}`}
+										className={`absolute top-0 left-0 right-0 mx-auto origin-center ${ENGINE_SHAPE_CLASSES}`}
+										style={{
+											transform: `rotateZ(${STATIC_ROTATIONS[positionInStack]}deg)`,
+											zIndex: NUM_PHYSICAL_CARDS - positionInStack
+										}}
+									>
+										<CardDeckContext.Provider value={{ isTop: false }}>
+											<div className="w-full h-full pointer-events-none overflow-hidden rounded-xl">
+												{card}
+											</div>
+										</CardDeckContext.Provider>
 									</div>
-								</CardDeckContext.Provider>
-							</div>
-						);
-					})}
+								);
+							})}
+						</div>
+					)}
 				</animated.div>
 			)}
 

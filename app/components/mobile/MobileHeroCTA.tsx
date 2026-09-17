@@ -23,16 +23,7 @@ export default function MobileHeroCTA() {
 		<div className="relative w-full">
 			<div className="flex w-full gap-2">
 				<a
-					href="https://x.com/medhansh541"
-					target="_blank"
-					rel="me noopener noreferrer"
-					className={iconClass}
-					aria-label="X (Twitter)"
-				>
-					<FaXTwitter size={20} aria-hidden="true" />
-				</a>
-				<a
-					href="https://www.instagram.com/medhansh341/"
+					href={profile.instagram}
 					target="_blank"
 					rel="me noopener noreferrer"
 					className={iconClass}
@@ -66,7 +57,7 @@ export default function MobileHeroCTA() {
 					<FiMail size={20} aria-hidden="true" />
 				</button>
 				<a
-					href="https://cal.com/medhansh541"
+					href={profile.cal}
 					target="_blank"
 					rel="me noopener noreferrer"
 					className={iconClass}
@@ -75,7 +66,7 @@ export default function MobileHeroCTA() {
 					<FiVideo size={20} aria-hidden="true" />
 				</a>
 				<a
-					href="/resume.pdf"
+					href={profile.resumeUrl}
 					target="_blank"
 					rel="noopener noreferrer"
 					className={iconClass}

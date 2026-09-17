@@ -1,11 +1,11 @@
 import {
-	getCodeforcesData,
+	getGfgData,
 	getCommitFeed,
 	getGithubData,
 	getLeetcodeData,
 } from "@/app/lib/api-fetchers";
 import AnimatedCell from "../AnimatedCell";
-import CodeforcesWidget from "../CodeforcesWidget";
+import GfgWidget from "../GfgWidget";
 import CommitFeed from "../CommitFeed";
 import ExperienceCard from "../ExperienceCard";
 import GithubCalendar from "../GithubCalendar";
@@ -14,10 +14,10 @@ import LeetCodeWidget from "../LeetCodeWidget";
 import ProjectsDrawer from "../ProjectsDrawer";
 
 export default async function DesktopGrid() {
-	const [githubData, leetcodeData, codeforcesData, commits] = await Promise.all([
+	const [githubData, leetcodeData, gfgData, commits] = await Promise.all([
 		getGithubData(),
 		getLeetcodeData(),
-		getCodeforcesData(),
+		getGfgData(),
 		getCommitFeed(),
 	]);
 
@@ -40,7 +40,7 @@ export default async function DesktopGrid() {
 					<GithubCalendar
 						githubData={githubData}
 						leetcodeData={leetcodeData?.calendar || {}}
-						codeforcesData={codeforcesData?.calendar || {}}
+						gfgData={gfgData?.calendar || {}}
 					/>
 				</AnimatedCell>
 			</div>
@@ -48,7 +48,7 @@ export default async function DesktopGrid() {
 				<LeetCodeWidget delay={0.55} lcData={leetcodeData} />
 			</div>
 			<div className="hidden xl:flex h-full min-h-0 flex-col clip-margin-5">
-				<CodeforcesWidget delay={0.65} cfData={codeforcesData} />
+				<GfgWidget delay={0.65} gfgData={gfgData} />
 			</div>
 			<div className="hidden xl:flex h-full min-h-0 flex-col clip-margin-5">
 				<GithubStatsWidget delay={0.75} githubData={githubData} />
